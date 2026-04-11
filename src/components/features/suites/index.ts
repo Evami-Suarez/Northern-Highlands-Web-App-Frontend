@@ -1,3 +1,3 @@
-export { SanctuaryHeader } from './sanctuaryHeader';
-export { SuiteCard } from './suitesCard';
-export { CuratedExperiences } from './curatedExpriences';
+export { SanctuaryHeader } from './SanctuaryHeader';
+export { SuiteCard } from './SuiteCard';
+export { CuratedExperiences } from './CuratedExperiences';

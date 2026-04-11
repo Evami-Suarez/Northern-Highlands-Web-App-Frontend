@@ -1,6 +1,6 @@
-import { SanctuaryHeader } from '@/components/features/suites/sanctuaryHeader';
-import { SuiteCard } from '@/components/features/suites/suitesCard';
-import { CuratedExperiences } from '@/components/features/suites/curatedExpriences';
+import { SanctuaryHeader } from '@/components/features/suites/SanctuaryHeader'; // Capital S
+import { SuiteCard } from '@/components/features/suites/SuiteCard';
+import { CuratedExperiences } from '@/components/features/suites/CuratedExperiences';
 import { SUITES_DATA } from '@/lib/suites';
 
 export default function SuitesPage() {
