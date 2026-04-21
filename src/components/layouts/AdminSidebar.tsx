@@ -17,7 +17,7 @@ const navItems = [
   { icon: BedDouble, label: 'Rooms', href: '/rooms' },
   { icon: Utensils, label: 'Dining', href: '/menu-management' },
   { icon: CreditCard, label: 'Payments', href: '/payments' },
-  { icon: RotateCcw, label: 'Refunds', href: '/refunds' },
+  { icon: RotateCcw, label: 'Refunds', href: '/RefundRequests' },
 ];
 
 export function AdminSidebar() {
