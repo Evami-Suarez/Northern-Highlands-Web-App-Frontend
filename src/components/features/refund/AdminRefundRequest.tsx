@@ -1,15 +1,29 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Tabs } from "@/components/ui/Tabs";
 import { RefundRequestCard } from "./RefundRequestCard";
-// import { RefundPolicy } from "./AdminRefundPolicy";
-import { mockRefundRequests } from "@/lib/refundRequestMock";
+import { refundService } from "@/services/api/refundService";
 import { RefundRequest } from "@/types/refund";
-
 export function RefundRequestsPage() {
   const [activeTab, setActiveTab] = useState(0);
-  const [requests, setRequests] = useState(mockRefundRequests);
+  const [requests, setRequests] = useState<RefundRequest[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchRequests = async () => {
+      try {
+        const data = await refundService.getRefundRequests();
+        setRequests(data);
+      } catch (error) {
+        console.error("Failed to fetch refund requests:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchRequests();
+  }, []);
 
   const pendingRequests = requests.filter(
     (req: RefundRequest) => req.status === "pending",
@@ -18,20 +32,36 @@ export function RefundRequestsPage() {
     (req: RefundRequest) => req.status !== "pending",
   );
 
-  const handleApprove = (id: string) => {
-    setRequests((prev) =>
-      prev.map((req) =>
-        req.id === id ? { ...req, status: "approved" as const } : req,
-      ),
-    );
+  const handleApprove = async (id: string) => {
+    try {
+      // Extract numeric ID from string (e.g., "1" from "1")
+      const numericId = parseInt(id);
+      await refundService.updateRefundStatus(numericId, "approved");
+
+      // Update local state
+      setRequests((prev) =>
+        prev.map((req) =>
+          req.id === id ? { ...req, status: "approved" as const } : req,
+        ),
+      );
+    } catch (error) {
+      console.error("Failed to approve refund:", error);
+    }
   };
 
-  const handleReject = (id: string) => {
-    setRequests((prev) =>
-      prev.map((req) =>
-        req.id === id ? { ...req, status: "rejected" as const } : req,
-      ),
-    );
+  const handleReject = async (id: string) => {
+    try {
+      const numericId = parseInt(id);
+      await refundService.updateRefundStatus(numericId, "rejected");
+
+      setRequests((prev) =>
+        prev.map((req) =>
+          req.id === id ? { ...req, status: "rejected" as const } : req,
+        ),
+      );
+    } catch (error) {
+      console.error("Failed to reject refund:", error);
+    }
   };
 
   const tabs = [
@@ -40,6 +70,14 @@ export function RefundRequestsPage() {
   ];
 
   const currentRequests = activeTab === 0 ? pendingRequests : processedRequests;
+
+    if (loading) {
+    return (
+      <div className="flex justify-center items-center py-12">
+        <div className="text-zinc-500">Loading refund requests...</div>
+      </div>
+    );
+  }
 
   return (
     <div>
