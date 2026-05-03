@@ -39,9 +39,9 @@ export function Footer() {
               CONCIERGE
             </h4>
             <ul className="space-y-4">
-              {['Getting Here', 'Guest Reviews', 'Press & Media', 'Privacy Policy'].map((item) => (
+              {['Getting Here', 'Guest Reviews', 'Press & Media', 'Refund', 'Privacy Policy'].map((item) => (
                 <li key={item}>
-                  <Link href="#" className="text-sm text-zinc-600 transition-colors hover:text-brand-sienna dark:text-zinc-400">
+                  <Link href={item === 'Refund' ? '/refund' : '#'} className="text-sm text-zinc-600 transition-colors hover:text-brand-sienna dark:text-zinc-400">
                     {item}
                   </Link>
                 </li>
