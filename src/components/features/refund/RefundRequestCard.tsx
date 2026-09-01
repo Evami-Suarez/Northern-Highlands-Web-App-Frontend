@@ -23,11 +23,11 @@ export const RefundRequestCard = forwardRef<
                 {request.id}
               </span>
               <span className="text-xs text-zinc-500">
-                {request.requestedAt}
+                {request.createdAt}
               </span>
             </div>
             <h3 className="font-semibold text-zinc-900 dark:text-zinc-100 mb-1 text-2xl">
-              {request.applicant}
+              {request.userId}
             </h3>
             <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-3">
               {request.description}
@@ -36,7 +36,7 @@ export const RefundRequestCard = forwardRef<
             {/* Stay, Reason, and Buttons in same row */}
             <div className="flex justify-between items-center">
               <div className="flex gap-4 text-xs text-zinc-500">
-                <span>Stay: {request.stayDates}</span>
+                <span>Booking: {request.bookingId}</span>
                 <span>Reason: {request.reasonCategory}</span>
               </div>
               <div className="flex gap-3 justify-end pl-10 mt-4">
