@@ -5,6 +5,8 @@ import { RefundPolicy } from "@/components/features/refund/AdminRefundPolicy";
 import { Button } from "@/components/ui/Button";
 import { Download } from "lucide-react";
 
+export const dynamic = 'force-dynamic'
+
 export default function RefundRequests() {
   return (
     <div className="flex flex-col lg:flex-row gap-6">
