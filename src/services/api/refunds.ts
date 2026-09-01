@@ -3,6 +3,11 @@ import { RefundRequest, RefundCreateInput } from '@/types/refund';
 
 export const refundsService = {
   async getAll(): Promise<RefundRequest[]> {
+    if (!supabase) {
+      console.warn('Supabase client not initialized. Returning empty array.');
+      return [];
+    }
+
     const { data, error } = await supabase
       .from('refunds')
       .select(`
@@ -17,6 +22,10 @@ export const refundsService = {
   },
 
   async create(input: RefundCreateInput): Promise<RefundRequest> {
+    if (!supabase) {
+      throw new Error('Supabase client not initialized');
+    }
+
     const refundId = `REF-${Date.now()}`;
     const { data, error } = await supabase
       .from('refunds')
@@ -29,8 +38,12 @@ export const refundsService = {
   },
 
   async updateStatus(refundId: string, status: RefundRequest['status'], adminNotes?: string): Promise<void> {
-    const updateData = { 
-      status, 
+    if (!supabase) {
+      throw new Error('Supabase client not initialized');
+    }
+
+    const updateData = {
+      status,
       updated_at: new Date().toISOString(),
       ...(status !== 'pending' && { processed_at: new Date().toISOString() }),
       ...(adminNotes && { admin_notes: adminNotes })

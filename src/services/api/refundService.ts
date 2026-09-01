@@ -5,6 +5,11 @@ export const refundService = {
   async getRefundRequests(): Promise<RefundRequest[]> {
 
     try {
+      if (!supabase) {
+        console.warn('Supabase client not initialized. Returning empty array.');
+        return [];
+      }
+
       const { data: testData, error: testError } = await supabase
         .from("refunds")
         .select("count")
@@ -34,12 +39,7 @@ export const refundService = {
         refundId: item.refund_id?.toString() || "unknown",
         bookingId: item.booking_id?.toString() || "unknown",
         userId: item.user_id?.toString() || "unknown",
-        requestedAt: item.created_at
-          ? this.calculateDaysAgo(item.created_at)
-          : "Requested recently",
-        applicant: item.applicant || "Unknown Applicant",
         description: item.description || "No description provided",
-        stayDates: item.stay_dates || "Dates not specified",
         reasonCategory: item.reason_category || "General",
         amount: Number(item.amount) || 0,
         status: item.status || "pending",
@@ -54,21 +54,14 @@ export const refundService = {
     }
   },
 
-  calculateDaysAgo(createdDate: string): string {
-    if (typeof window === "undefined") {
-      return "Requested recently";
-    }
-
-    const days = Math.floor(
-      (Date.now() - new Date(createdDate).getTime()) / (1000 * 60 * 60 * 24),
-    );
-    return `Requested ${days} days ago`;
-  },
-
   async updateRefundStatus(
     refundId: number,
     status: "approved" | "rejected",
   ): Promise<void> {
+
+    if (!supabase) {
+      throw new Error('Supabase client not initialized');
+    }
 
     const { error } = await supabase
       .from("refunds")
