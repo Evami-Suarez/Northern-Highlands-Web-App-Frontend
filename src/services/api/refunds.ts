@@ -1,8 +1,12 @@
-import { supabase } from '@/lib/supabase'
+import { getSupabase } from '@/lib/supabase'
 import { RefundRequest, RefundCreateInput } from '@/types/refund';
+
+// Helper to safely cast supabase client
+const getSupabaseClient = () => getSupabase() as any;
 
 export const refundsService = {
   async getAll(): Promise<RefundRequest[]> {
+    const supabase = getSupabaseClient();
     if (!supabase) {
       console.warn('Supabase client not initialized. Returning empty array.');
       return [];
@@ -18,10 +22,11 @@ export const refundsService = {
       .order('created_at', { ascending: false });
 
     if (error) throw error;
-    return data;
+    return data as RefundRequest[];
   },
 
   async create(input: RefundCreateInput): Promise<RefundRequest> {
+    const supabase = getSupabaseClient();
     if (!supabase) {
       throw new Error('Supabase client not initialized');
     }
@@ -34,10 +39,11 @@ export const refundsService = {
       .single();
 
     if (error) throw error;
-    return data;
+    return data as RefundRequest;
   },
 
   async updateStatus(refundId: string, status: RefundRequest['status'], adminNotes?: string): Promise<void> {
+    const supabase = getSupabaseClient();
     if (!supabase) {
       throw new Error('Supabase client not initialized');
     }

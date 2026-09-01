@@ -1,10 +1,14 @@
-import { supabase } from "@/lib/supabase";
+import { getSupabase } from "@/lib/supabase";
 import { RefundRequest } from "@/types/refund";
+
+// Helper to safely cast supabase client
+const getSupabaseClient = () => getSupabase() as any;
 
 export const refundService = {
   async getRefundRequests(): Promise<RefundRequest[]> {
 
     try {
+      const supabase = getSupabaseClient();
       if (!supabase) {
         console.warn('Supabase client not initialized. Returning empty array.');
         return [];
@@ -34,7 +38,7 @@ export const refundService = {
         return [];
       }
 
-      const mappedData = data.map((item) => ({
+      const mappedData = data.map((item: any) => ({
         id: item.refund_id?.toString() || "unknown",
         refundId: item.refund_id?.toString() || "unknown",
         bookingId: item.booking_id?.toString() || "unknown",
@@ -59,6 +63,7 @@ export const refundService = {
     status: "approved" | "rejected",
   ): Promise<void> {
 
+    const supabase = getSupabaseClient();
     if (!supabase) {
       throw new Error('Supabase client not initialized');
     }
