@@ -3,32 +3,38 @@ import { RefundRequest } from '@/types/refund';
 export const mockRefundRequests: RefundRequest[] = [
   {
     id: 'NH-8831-Z',
-    requestedAt: 'Requested 1 day ago',
-    applicant: 'Sarah Mitchell',
-    description: 'Severe weather warning issued for travel dates, flight cancellations expected.',
-    stayDates: 'Oct 25 - Oct 28',
-    reasonCategory: 'Weather',
+    refundId: 'REF-001',
+    bookingId: 'BK-8831-Z',
+    userId: 'user-123',
     amount: 875.00,
-    status: 'pending'
+    reasonCategory: 'Weather',
+    description: 'Severe weather warning issued for travel dates, flight cancellations expected.',
+    status: 'pending',
+    createdAt: '2026-08-30T10:00:00Z',
+    updatedAt: '2026-08-30T10:00:00Z'
   },
-    {
+  {
     id: 'NH-81231-Z',
-    requestedAt: 'Requested 1 day ago',
-    applicant: 'Sarah Mitchell',
-    description: 'Severe weather warning issued for travel dates, flight cancellations expected.',
-    stayDates: 'Oct 25 - Oct 28',
-    reasonCategory: 'Weather',
+    refundId: 'REF-002',
+    bookingId: 'BK-81231-Z',
+    userId: 'user-456',
     amount: 875.00,
-    status: 'pending'
+    reasonCategory: 'Weather',
+    description: 'Severe weather warning issued for travel dates, flight cancellations expected.',
+    status: 'pending',
+    createdAt: '2026-08-30T10:00:00Z',
+    updatedAt: '2026-08-30T10:00:00Z'
   },
-    {
+  {
     id: 'NH-1234-B',
-    requestedAt: 'Requested 1 day ago',
-    applicant: 'Sarah Mitchell',
-    description: 'Severe weather warning issued for travel dates, flight cancellations expected.',
-    stayDates: 'Oct 25 - Oct 28',
-    reasonCategory: 'Weather',
+    refundId: 'REF-003',
+    bookingId: 'BK-1234-B',
+    userId: 'user-789',
     amount: 875.00,
-    status: 'pending'
+    reasonCategory: 'Weather',
+    description: 'Severe weather warning issued for travel dates, flight cancellations expected.',
+    status: 'pending',
+    createdAt: '2026-08-30T10:00:00Z',
+    updatedAt: '2026-08-30T10:00:00Z'
   }
 ];
